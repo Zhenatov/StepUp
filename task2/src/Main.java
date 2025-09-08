@@ -30,20 +30,22 @@ public class Main {
         String[] arrayStringExample = {"a ab ab abc abc", "ae dae fdsaf fd sa", "asd gdf asd qw asd", "qw gfd a abc aasdf"};
 
         //Найдите в списке целых чисел 3-е наиболшее число
-        Integer max = IntStream.range(0, integerListExample.size())
-                .filter(i -> i % 3 == 0)
-                .mapToObj(integerListExample::get)
-                .max(Comparator.naturalOrder())
+        Integer max = integerListExample
+                .stream()
+                .sorted(Comparator.reverseOrder())
+                .skip(2)
+                .findFirst()
                 .orElseThrow();
 
         System.out.println("max = " + max);
 
         //Найдите в списке целых чисел 3-е наиболшее уникальное число
-        Integer maxUnic = IntStream.range(0, integerListExample.size())
-                .filter(i -> i % 3 == 0)
-                .mapToObj(integerListExample::get)
-                .filter(x -> Collections.frequency(integerListExample, x) == 1)
-                .max(Comparator.naturalOrder())
+        Integer maxUnic = integerListExample
+                .stream()
+                .distinct()
+                .sorted(Comparator.reverseOrder())
+                .skip(2)
+                .findFirst()
                 .orElseThrow();
 
         System.out.println("maxUnic = " + maxUnic);
@@ -92,7 +94,7 @@ public class Main {
                 .sorted(
                         Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder())
                 )
-                .collect(Collectors.toList());
+                .toList();
 
         System.out.println("sortListWord = " + sortListWord);
 
