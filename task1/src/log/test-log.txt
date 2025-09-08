@@ -1,0 +1,6 @@
+PASSED: testA
+PASSED: testWithParams
+IGNORED: testIgnored
+--- TEST SUMMARY ---
+PASSED: 2
+FAILED: 0
