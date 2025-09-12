@@ -9,12 +9,9 @@ import java.util.List;
 
 @Component
 public class ProductsMapper {
+
     public ProductsDto toProductsDto(Products products) {
-        return new ProductsDto()
-                .setId(products.getId())
-                .setAccountNumber(products.getAccountNumber())
-                .setBalance(products.getBalance())
-                .setProductType(String.valueOf(products.getProductType()));
+        return new ProductsDto(products.getId(), products.getAccountNumber(), products.getBalance(),String.valueOf(products.getProductType()));
     }
 
     public List<ProductsDto> toProductsDtoList(List<Products> productsList) {
