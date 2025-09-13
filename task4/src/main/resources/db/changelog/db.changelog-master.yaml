@@ -1,0 +1,84 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: zhenatov
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: zhenatov
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: alpha
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: beta
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: gamma
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: delta
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: epsilon
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: zeta
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: eta
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: theta
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: iota
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: kappa
