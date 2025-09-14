@@ -82,3 +82,182 @@ databaseChangeLog:
               - column:
                   name: username
                   value: kappa
+  - changeSet:
+      id: add-created-at-to-users
+      author: zhenatov
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+                  defaultValue: now()
+  - changeSet:
+      id: add-new-table-products
+      author: zhenatov
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: account_number
+                  type: VARCHAR(20)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: balance
+                  type: DECIMAL(19,4)
+                  constraints:
+                    nullable: false
+                  defaultValue: 0
+              - column:
+                  name: product_type
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+                  defaultValue: now()
+  - changeSet:
+      id: add-foreign-key-to-customer-accounts
+      author: zhenatov
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: products
+            baseColumnNames: user_id
+            constraintName: fk_products_users_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+  - changeSet:
+      id: update-table-products
+      author: zhenatov
+      changes:
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: account_number
+                  value: 0001
+              - column:
+                  name: balance
+                  value: 0.000
+              - column:
+                  name: product_type
+                  value: CARD
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: created_at
+                  value: now()
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: account_number
+                  value: 0002
+              - column:
+                  name: balance
+                  value: 100.000
+              - column:
+                  name: product_type
+                  value: ACCOUNT
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: created_at
+                  value: now()
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: account_number
+                  value: 0003
+              - column:
+                  name: balance
+                  value: 10.000
+              - column:
+                  name: product_type
+                  value: CARD
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: created_at
+                  value: now()
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: account_number
+                  value: 0004
+              - column:
+                  name: balance
+                  value: 1.000
+              - column:
+                  name: product_type
+                  value: ACCOUNT
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: created_at
+                  value: now()
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: account_number
+                  value: 0005
+              - column:
+                  name: balance
+                  value: 12.12
+              - column:
+                  name: product_type
+                  value: CARD
+              - column:
+                  name: user_id
+                  value: 3
+              - column:
+                  name: created_at
+                  value: now()
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: account_number
+                  value: 0006
+              - column:
+                  name: balance
+                  value: 300
+              - column:
+                  name: product_type
+                  value: ACCOUNT
+              - column:
+                  name: user_id
+                  value: 3
+              - column:
+                  name: created_at
+                  value: now()
