@@ -13,11 +13,11 @@ import java.util.List;
 public class ProductsService {
     private final ProductsRepository productsRepository;
 
-//    public Products getProductById(Long id) throws SQLException {
-//        return productsRepository.findById(Math.toIntExact(id)).orElseThrow(() -> new SQLException("Product not found"));
-//    }
-//
-//    public List<Products> getAllProducts(Long userId) throws SQLException {
-//        return productsRepository.findByUsersId(userId).orElseThrow(() -> new SQLException("Product not found"));
-//    }
+    public Products getProductById(Long id) throws SQLException {
+        return productsRepository.findById(id).orElseThrow(() -> new SQLException("Product not found"));
+    }
+
+    public List<Products> getAllProducts(Long userId) throws SQLException {
+        return productsRepository.findByUserId(userId).orElseThrow(() -> new SQLException("Product not found"));
+    }
 }

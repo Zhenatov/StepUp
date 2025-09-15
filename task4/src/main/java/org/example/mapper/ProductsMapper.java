@@ -1,0 +1,27 @@
+package org.example.mapper;
+
+import org.example.model.dto.ProductsDto;
+import org.example.model.entity.Products;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+public class ProductsMapper {
+    public ProductsDto toProductsDto(Products products) {
+        return new ProductsDto()
+                .setId(products.getId())
+                .setAccountNumber(products.getAccountNumber())
+                .setBalance(products.getBalance())
+                .setProductType(String.valueOf(products.getProductType()));
+    }
+
+    public List<ProductsDto> toProductsDtoList(List<Products> productsList) {
+        List<ProductsDto> productsDtoList = new ArrayList<>();
+        for (Products products : productsList) {
+            productsDtoList.add(toProductsDto(products));
+        }
+        return productsDtoList;
+    }
+}

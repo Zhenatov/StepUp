@@ -39,9 +39,10 @@ public class Users {
                 sb.append(" [");
                 products.forEach(product -> sb.append(product).append(", "));
                 sb.setLength(sb.length() - 2);
-                sb.append("]");
             }
         }
+
+        sb.append("]");
 
         return sb.toString();
     }
