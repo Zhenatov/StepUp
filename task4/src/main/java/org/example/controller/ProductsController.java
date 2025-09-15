@@ -22,7 +22,7 @@ public class ProductsController {
         return productsMapper.toProductsDto(productsService.getProductById(productId));
     }
 
-    @GetMapping("/getAllProductById")
+    @GetMapping("/getAllProductByUserId")
     public List<ProductsDto> getAllProductById( @RequestParam(name = "userId") Long userId) throws SQLException {
         return productsMapper.toProductsDtoList(productsService.getAllProducts(userId));
     }
