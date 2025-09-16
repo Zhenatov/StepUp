@@ -1,8 +1,14 @@
 package org.example.service;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.entity.Users;
+import lombok.extern.slf4j.Slf4j;
+import org.example.mapper.UsersMapper;
+import org.example.model.dto.UsersDto;
+import org.example.model.entity.Users;
 import org.example.reposiory.UsersRepository;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
@@ -10,34 +16,53 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
     private final UsersRepository usersRepository;
+    private final UsersMapper usersMapper;
 
-    public Users getUserById(Long id) throws SQLException {
-        return usersRepository.findById(id).orElseThrow(() -> new SQLException("User not found"));
+    @Transactional
+    public UsersDto getUserById(Long id) {
+        log.info("Запрос пользователя с ID: {}", id);
+        Users user = usersRepository.findById(id).orElseThrow(() -> {
+            log.error("Пользователя с ID не найден: {}", id);
+            return new EntityNotFoundException("Пользователь не найден ID: " + id);
+        });
+        return usersMapper.toUsersDto(user);
     }
 
-    public Users getUserByUsername(String username) throws SQLException {
-        return usersRepository.findByUsername(username).orElseThrow(() -> new SQLException("User not found"));
+    @Transactional
+    public UsersDto getUserByUsername(String username) {
+        log.info("Запрос пользователя с username: {}", username);
+        Users user = usersRepository.findByUsername(username).orElseThrow(() -> {
+            log.error("Пользователя с username не найден: {}", username);
+            return new EntityNotFoundException("Пользователь не найден username: " + username);
+        });
+        return usersMapper.toUsersDto(user);
     }
 
-    public void deleteUserById(Long id) throws SQLException {
+    @Transactional
+    public void deleteUserById(Long id) {
         usersRepository.deleteById(id);
     }
 
-    public void deleteUserByUserName(String userName) throws SQLException {
+    @Transactional
+    public void deleteUserByUserName(String userName) {
         usersRepository.deleteByUsername(userName);
     }
 
-    public List<Users> getAllUsers() throws SQLException {
-        return usersRepository.findAll();
+    @Transactional
+    public List<UsersDto> getAllUsers() {
+        return usersMapper.toUsersDtoList(usersRepository.findAll());
     }
 
-    public void deleteAllUsers() throws SQLException {
+    @Transactional
+    public void deleteAllUsers() {
         usersRepository.deleteAll();
     }
 
-    public void updateUser(Users user) throws SQLException {
+    @Transactional
+    public void updateUser(Users user) {
         usersRepository.save(user);
     }
 }

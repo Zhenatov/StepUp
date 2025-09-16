@@ -1,8 +1,9 @@
 package org.example.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.entity.Users;
+import org.example.model.entity.Users;
 import org.example.reposiory.UsersRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class RunService implements CommandLineRunner {
 
 
     @Override
+    @Transactional
     public void run(String... args) throws SQLException {
         log.info("Запуск тестов методов реозитория...");
 

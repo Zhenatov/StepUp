@@ -12,3 +12,9 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     drop-first: false
     contexts: dev
+
+logging:
+  level:
+    liquibase: DEBUG
+    org.liquibase: DEBUG
+    org.springframework.liquibase: DEBUG
