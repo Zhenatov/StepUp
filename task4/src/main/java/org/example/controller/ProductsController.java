@@ -20,7 +20,6 @@ public class ProductsController {
 
     @GetMapping("/search/id")
     public ProductsDto getProductById(@RequestParam(name = "id") Long productId) {
-        log.info("test");
         return productsService.getProductById(productId);
     }
 
