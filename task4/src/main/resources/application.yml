@@ -18,3 +18,6 @@ logging:
     liquibase: DEBUG
     org.liquibase: DEBUG
     org.springframework.liquibase: DEBUG
+
+server:
+  port: 8080
