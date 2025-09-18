@@ -30,20 +30,20 @@ public class ProductsService {
         return productsMapper.toProductsDto(products);
     }
 
-    public List<ProductsDto> getAllProducts(Long userId) { //ToDo ошибка при получении всех продуктов по userId надо искать через список всех платежек
+    public List<ProductsDto> getAllProducts(Long userId) {
         log.info("Запрос продукта с userId: {}", userId);
-        List<Long> payments = paymentsRepository.findByUserId(userId).orElseThrow(
+        List<Long> paymentsId = paymentsRepository.findByUserId(userId).orElseThrow(
                 () -> {
-                    log.error("Пользователь с id не найден: {}", userId);
-                    return new EntityNotFoundException("Пользователь не найден, id: " + userId);
+                    log.error("У пользователя с id = {} не найдены платежи", userId);
+                    return new EntityNotFoundException("Платежи не найдены, userId: " + userId);
                 }
         )
                 .stream()
                 .map(Payment::getId)
                 .toList();
-        List<Products> productsList = productsRepository.findByPaymentIdIn(payments).orElseThrow(() -> {
-            log.error("Продукт с userId не найден: {}", userId);
-            return new EntityNotFoundException("Продукт не найден, userId: " + userId);
+        List<Products> productsList = productsRepository.findByPaymentIdIn(paymentsId).orElseThrow(() -> {
+            log.error("Продукты по данным платежам не найдены {} не найден: ", paymentsId);
+            return new EntityNotFoundException("Продукты не найден, paymentsId: " + paymentsId);
         });
         return productsMapper.toProductsDtoList(productsList);
     }

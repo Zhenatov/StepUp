@@ -30,7 +30,7 @@ public class PaymentService {
         Users users = usersRepository.findById(paymentDto.userId()).orElseThrow(
                 () -> {
                     log.error("User not found");
-                    return new EntityNotFoundException("User not found");//ToDo поправить эксепшн
+                    return new EntityNotFoundException("User not found");
                 }
         );
 
@@ -48,8 +48,8 @@ public class PaymentService {
     public List<PaymentDto> searchAllPaymentsByUserId(Long userId) {
         List<Payment> paymentList = paymentsRepository.findByUserId(userId).orElseThrow(
                 () -> {
-                    log.error("Payment not found");
-                    return new EntityNotFoundException("User not found");//ToDo поправить эксепшн
+                    log.error("У пользователя = {} не найдены платежи", userId);
+                    return new EntityNotFoundException("Платежи у пользователя = " + userId + " не найдены");
                 }
         );
 

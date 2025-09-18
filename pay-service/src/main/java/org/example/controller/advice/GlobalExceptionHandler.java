@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.example.exception.CustomException;
 import org.example.model.dto.ErrorDto;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -111,5 +113,21 @@ public class GlobalExceptionHandler {
                 parsedExternalError, // может быть null
                 parsedExternalError == null ? body : null // если не распарсили — кладём в rawErrorMessage
         );
+    }
+
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ErrorDto> handleCustomException(CustomException e, HttpServletRequest request) {
+        ErrorDto error = new ErrorDto(
+                OffsetDateTime.now(),
+                e.getStatus().value(),
+                e.getStatus().getReasonPhrase(),
+                e.getMessage(),
+                request.getRequestURI(),
+                MICROSERVICE_NAME,
+                null,
+                null
+        );
+        return ResponseEntity.status(e.getStatus()).body(error);
     }
 }

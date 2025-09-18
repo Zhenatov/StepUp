@@ -5,14 +5,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.example.exception.CustomException;
 import org.example.model.dto.PaymentDto;
 import org.example.model.dto.ProductsDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -53,7 +51,10 @@ public class PaymentService {
         log.info("test");
 
         if(paymentDto.productsDtoList().isEmpty()){
-            throw new EntityNotFoundException();//ToDo поправить эксепшн
+            throw new CustomException(
+                    "В запросе нет ни одного платежа",
+                    HttpStatus.UNPROCESSABLE_ENTITY
+            );
         }
         Double orderAmount = 0.0;
 
@@ -62,7 +63,10 @@ public class PaymentService {
         }
 
         if(paymentDto.sum() < orderAmount){
-            throw new EntityNotFoundException();//ToDo поправить эксепшн
+            throw new CustomException(
+                    "Недостаточно средств для проведения платежа",
+                    HttpStatus.UNPROCESSABLE_ENTITY
+            );
         };
 
         HttpHeaders headers = new HttpHeaders();
