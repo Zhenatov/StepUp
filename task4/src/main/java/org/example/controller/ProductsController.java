@@ -2,12 +2,11 @@ package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.model.dto.PaymentDto;
 import org.example.model.dto.ProductsDto;
 import org.example.service.ProductsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class ProductsController {
     }
 
     @GetMapping("/search/user-id")
-    public List<ProductsDto> getAllProductById(@RequestParam(name = "userId") Long userId) {
+    public List<ProductsDto> getAllProductByUserId(@RequestParam(name = "userId") Long userId) {
         return productsService.getAllProducts(userId);
     }
 }

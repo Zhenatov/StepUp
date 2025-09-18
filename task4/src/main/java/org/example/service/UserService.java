@@ -8,10 +8,8 @@ import org.example.mapper.UsersMapper;
 import org.example.model.dto.UsersDto;
 import org.example.model.entity.Users;
 import org.example.reposiory.UsersRepository;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Component
