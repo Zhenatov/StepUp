@@ -128,5 +128,6 @@
 └─ **/users**  
 &emsp;&emsp;└─ **{userId}**  *(MethodType:Get; PathVariable:Long; ResponseBody:UsersDto)*  
 └─ **/products**  
-&emsp;&emsp;└─ **/search/id**  *(MethodType:Get; RequestParam:Long; ResponseBody:ProductsDto)*  
-&emsp;&emsp;└─ **/search/user-id**  *(MethodType:Get; RequestParam:Long; ResponseBody:List<ProductsDto>)*  
+&emsp;&emsp;└─ **/search**  
+&emsp;&emsp;&emsp;└─ **/id**  *(MethodType:Get; RequestParam:Long; ResponseBody:ProductsDto)*  
+&emsp;&emsp;&emsp;└─ **/user-id**  *(MethodType:Get; RequestParam:Long; ResponseBody:List<ProductsDto>)*  
