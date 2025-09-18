@@ -1,5 +1,6 @@
 server:
   port: 8085
+  name: "pay-service"
 
 integrations:
   rest-service:
@@ -13,3 +14,4 @@ logging:
     liquibase: DEBUG
     org.liquibase: DEBUG
     org.springframework.liquibase: DEBUG
+
