@@ -1,0 +1,17 @@
+server:
+  port: 8085
+  name: "pay-service"
+
+integrations:
+  rest-service:
+    users-and-products:
+      url: "http://localhost:8080/"
+      connect-timeout: 10s
+      read-timeout: 20s
+
+logging:
+  level:
+    liquibase: DEBUG
+    org.liquibase: DEBUG
+    org.springframework.liquibase: DEBUG
+

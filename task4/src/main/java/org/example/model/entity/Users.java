@@ -2,18 +2,18 @@ package org.example.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
 
+import static org.example.Utils.Utils.setToString;
+
 @Getter
-@Setter
 @Entity
 @Table(name = "users")
 @NamedEntityGraph(
-        name = "Users.withProducts",
-        attributeNodes = @NamedAttributeNode("products")
+        name = "Users.withPayments",
+        attributeNodes = @NamedAttributeNode("payments")
 )
 public class Users {
     @Id
@@ -26,24 +26,40 @@ public class Users {
     private OffsetDateTime createdAt;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Products> products;
+    private Set<Payment> payments;
+
+
+    public Users setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public Users setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public Users setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public Users setPayments(Set<Payment> payments) {
+        this.payments = payments;
+        return this;
+    }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Users [id=").append(id).append(", username=").append(username).append(", createdAt=");
+        return new StringBuilder().append("Users [id=").append(id)
+                .append(", username=").append(username)
+                .append(", createdAt=").append(createdAt)
+                .append(", payments=").append(setToString(payments))
+                .append("]").toString();
+    }
 
-        if(products != null){
-            sb.append(", products=").append(products.size()).append(" items");
-            if(!products.isEmpty()){
-                sb.append(" [");
-                products.forEach(product -> sb.append(product).append(", "));
-                sb.setLength(sb.length() - 2);
-            }
-        }
-
-        sb.append("]");
-
-        return sb.toString();
+    public void addPayment(Payment payment) {
+        payments.add(payment);
+        payment.setUser(this);
     }
 }

@@ -261,3 +261,70 @@ databaseChangeLog:
               - column:
                   name: created_at
                   value: now()
+  - changeSet:
+      id: change-structure-table-products
+      author: zhenatov
+      changes:
+        - addColumn:
+            tableName: products
+            columns:
+              - column:
+                  name: payment_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+        - dropForeignKeyConstraint:
+            baseTableName: products
+            constraintName: fk_products_users_id
+        - dropColumn:
+            tableName: products
+            columnName: user_id
+  - changeSet:
+      id: create-table-payment
+      author: zhenatov
+      changes:
+        - createTable:
+            tableName: payments
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: sum
+                  type: DECIMAL(19,4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+                  defaultValue: now()
+  - changeSet:
+      id: add-new-foreign-key-to-payment-products
+      author: zhenatov
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: products
+            baseColumnNames: payment_id
+            constraintName: fk_products_payment_id
+            referencedTableName: payments
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: payments
+            baseColumnNames: user_id
+            constraintName: fk_payments_users_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
